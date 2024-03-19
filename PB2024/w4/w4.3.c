@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 int main(){
-    int inp;
-    scanf("%d",&inp);
+    char inp;
+    scanf("%c",&inp);
+    printf("%d\n",inp);
     printf("0x%x\n",inp);
     int cnt=0;
     for(;inp;inp=inp>>1){

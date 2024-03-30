@@ -16,7 +16,7 @@ int whereis(int n,crd stp,crd hol){
     else return hol.col-stp.col<m?3:4;
 }
 
-int fillboard(int n,vector<vector<int>>& board,crd stp,int where){
+void fillboard(int n,vector<vector<int>>& board,crd stp,int where){
     ++cnt;
     if(where!=1) board[stp.row][stp.col]=cnt;
     if(where!=2) board[stp.row][stp.col+1]=cnt;
@@ -26,15 +26,16 @@ int fillboard(int n,vector<vector<int>>& board,crd stp,int where){
 
 crd hole(int part,int where,int n,crd stp,crd hol){
     int m=n/2;
-    if(part!=where)
-        hol.row=stp.row+m-1,hol.col=stp.col+m-1; 
+    if(part!=where){
+        hol={stp.row+m-1,stp.col+m-1}; 
         if(part==2 || part==4) hol.col+=1;
         if(part==3 || part==4) hol.row+=1; 
+    }
     return hol;
 }
 
 void tromino(int n,vector<vector<int>>& board,crd stp,crd hol){
-    int where=whereis(n,stp,hol);
+    int where=whereis(n,stp,hol); //cout<<"hol is in "<<where<<endl;
     if(n==2)//Exit condition
         fillboard(n,board,stp,where);
     else{
@@ -42,14 +43,15 @@ void tromino(int n,vector<vector<int>>& board,crd stp,crd hol){
         //Fill in the middle 4 spaces
         fillboard(n,board,{stp.row+m-1,stp.col+m-1},where);
         //Filled spaces are considered holes.                  
-        hol=hole(1,where,n,stp,hol);
-        tromino(m,board,stp,hol);
-        hol=hole(2,where,n,stp,hol);
-        tromino(m,board,{stp.row,stp.col+m},hol);
-        hol=hole(3,where,n,stp,hol);
-        tromino(m,board,{stp.row+m,stp.col},hol);
-        hol=hole(4,where,n,stp,hol);
-        tromino(m,board,{stp.row+m,stp.col+m},hol);
+        crd newhol;
+        newhol=hole(1,where,n,stp,hol);
+        tromino(m,board,stp,newhol);
+        newhol=hole(2,where,n,stp,hol);
+        tromino(m,board,{stp.row,stp.col+m},newhol);
+        newhol=hole(3,where,n,stp,hol);
+        tromino(m,board,{stp.row+m,stp.col},newhol);
+        newhol=hole(4,where,n,stp,hol);
+        tromino(m,board,{stp.row+m,stp.col+m},newhol);
     }
 }
 int main(){

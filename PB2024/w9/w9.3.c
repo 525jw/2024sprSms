@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+typedef unsigned long long long_t;
+
+int cnt = 0;
+
+void collatz(long_t n){
+    cnt++;
+    if(n==1){
+        printf("1\n");
+        return;
+    }
+    else{
+        printf("%llu ",n);
+    }
+    if(n%2==0) collatz(n/2);
+    else collatz(3*n+1);
+}
+
+int main()
+{
+    int N;
+    scanf("%d", &N);
+    collatz(N);
+    printf("%d", cnt);   
+}

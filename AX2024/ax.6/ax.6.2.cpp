@@ -7,11 +7,11 @@ using namespace std;
 typedef struct vector<vector<int>> matrix;
 int solve(int i,int j,vector<int> prob,matrix& A,matrix& R){
     if(A[i][j]!=-1) return A[i][j];
-    else if(i==j) {R[i][j]=i; return A[i][j]=prob[i];}
-    else if(i+1==j) {R[i][j]=0; return A[i][j]=0;}
+    else if(i==j) {R[i][j]=0; return A[i][j]=prob[i];}
     else{
         int minval=INF;
-        for(int k=i;k<=j;k++){
+        for(int k=i+1;k<j;k++){
+            cout<<'#'<<i<<' '<<k-1<<' '<<k+1<<' '<<j<<endl;
             int nowval=solve(i,k-1,prob,A,R)+solve(k+1,j,prob,A,R);
             minval=(minval>nowval) ? R[i][j]=k,nowval : minval;
         }
@@ -28,7 +28,7 @@ int main(){
     for(int i=1;i<=n;i++)
         cin>>prob[i];
     matrix A(n+1,vector<int>(n+1,-1));
-    matrix R(n+1,vector<int>(n+1,-1)); 
+    matrix R(n+1,vector<int>(n+1,-1));
 
     int res=solve(1,n,prob,A,R);
 

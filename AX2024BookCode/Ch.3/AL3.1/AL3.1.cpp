@@ -1,23 +1,30 @@
 /*
 # Page
-    93p / Chapter 3.(Part1)
+    93p / Chapter 3.(Part1) 10p
 # Name 
     Binomial Coefficient Using Dvide-and-Conquer
 # Description 
-    
+    Tree의 노드 개수 만큼 시간복잡도가 나온다. 높이는 worst case에서 n
 # Input
-    [n] [m] 
-    [u1] [v1] [W[u1][v1]]
-    [u2] [v2] [W[u2][v2]]
-    ...
-    [um] [vm] [W[um][vm]]
+
 # Output
 
 # TimeComplexity
-    O()
+    O(2^n)
 */
 #include <iostream>
 using namespace std;
+typedef unsigned long long LongInteger;
+
+LongInteger bin(int n,int k){
+    if(k==0 || n==k)
+        return 1;
+    else
+        return bin(n-1,k)+bin(n-1,k-1);
+}
 int main(){
+    int n,k;
+    cin>>n>>k;
+    cout<<bin(n,k);
     return 0;
 }

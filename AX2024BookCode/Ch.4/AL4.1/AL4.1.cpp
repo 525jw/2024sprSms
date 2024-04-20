@@ -1,6 +1,7 @@
 /*
 # Page
     152p / Chapter 4.(part1) 18p
+    http://155.230.120.231/contest/164/problem/AP.7.1
 # Name 
     Prim's Algorithm
 # Description 
@@ -15,7 +16,7 @@
 # Output
 
 # TimeComplexity
-    O(|v|^2)
+    O(|V|^2)
 */
 #include <iostream>
 #include <vector>
@@ -26,7 +27,7 @@ typedef vector<pair<int,int>> set_of_edges;
 typedef pair<int,int> edge_t;
 
 //- 시작 vertex의 index, default : 1
-int starting_vertex=1;
+const int starting_vertex=1;
 
 void prim(int n,matrix_t& W,set_of_edges& F){
     //- 집합 Y에 속하지 않은 vertex중 Y에 가장 가까운 것의 index, Y는 방문한 vertex의 집합
@@ -45,13 +46,12 @@ void prim(int n,matrix_t& W,set_of_edges& F){
     }
 
     //repeat n-1 times
-    int T=n-1;
-    while(T--){
+    int rp=n-1;
+    while(rp--){
         //nearest 출력
         for(int i=1;i<=n;i++){
             if(i==starting_vertex) continue;
-            cout<<nearest[i];
-            if(i!=n) cout<<' '; 
+            cout<<nearest[i]<<' '; 
         }
         cout<<endl;
         
@@ -65,7 +65,7 @@ void prim(int n,matrix_t& W,set_of_edges& F){
             }
         }
 
-        //v_vnear와 v_nearest[vnear] 연결 간선을 집합 F에 추가;
+        // v_nearest[vnear]와 v_vnear 연결 간선을 집합 F에 추가;
         F.push_back(make_pair(vnear,nearest[vnear]));
 
         //Y에 v_near가 추가된 후 각 vetex와 Y의 distance[i] 갱신
@@ -81,8 +81,7 @@ void prim(int n,matrix_t& W,set_of_edges& F){
     //최종 nearest 출력
     for(int i=1;i<=n;i++){
             if(i==starting_vertex) continue;
-            cout<<nearest[i];
-            if(i!=n) cout<<' '; 
+            cout<<nearest[i]<<' '; 
         }
     cout<<endl;
 }
@@ -107,8 +106,7 @@ int main(){
     for(int i=0;i<F.size();i++){ // edge_t e : F
         edge_t e=F[i];
         u=e.first; v=e.second;
-        cout<<u<<" "<<v<<" "<<W[u][v];
-        if(i!=F.size()-1) cout<<endl;
+        cout<<u<<" "<<v<<" "<<W[u][v]<<endl;
     }
     return 0;
 }

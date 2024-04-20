@@ -55,6 +55,8 @@
         "array": "cpp",
         "*.tcc": "cpp",
         "deque": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "map": "cpp",
+        "xtree": "cpp"
     }
 }

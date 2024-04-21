@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 using namespace std;
-typedef vector<int> largeInt;
+typedef vector<int> LargeInteger;
 int threshold,cnt;
-largeInt u,v,r;
-void carry(largeInt &v){
+LargeInteger u,v,r;
+void roundup_carry(LargeInteger &v){
     int cry=0;
     for(int i=0;i<v.size();i++){
         v[i]+=cry;
@@ -14,23 +14,23 @@ void carry(largeInt &v){
     }
     if(cry!=0) v.push_back(cry);
 }
-void add(largeInt u,largeInt v,largeInt &r){
+void add(LargeInteger u,LargeInteger v,LargeInteger &r){
     r.resize(max(u.size(),v.size()));
     fill(r.begin(),r.end(),0);
     for(int i=0;i<r.size();i++){
         if(i<u.size()) r[i]+=u[i];
         if(i<v.size()) r[i]+=v[i];
     }
-    carry(r);
+    roundup_carry(r);
 }
-void mult(largeInt u,largeInt v,largeInt &r){
+void lmult(LargeInteger u,LargeInteger v,LargeInteger &r){
     r.resize(u.size()+v.size()-1);
     fill(r.begin(),r.end(),0);
     int i,j;
     for(i=0;i<u.size();i++) for(j=0;j<v.size();j++) r[i+j]+=u[i]*v[j];
-    carry(r);
+    roundup_carry(r);
 }
-void pow(largeInt u,int m,largeInt &v){
+void pow(LargeInteger u,int m,LargeInteger &v){
     if(u.size()==0) v.resize(0);
     else{
         v.resize(u.size()+m);
@@ -38,7 +38,7 @@ void pow(largeInt u,int m,largeInt &v){
         copy(u.begin(),u.end(),v.begin()+m);
     }
 }
-void div(largeInt u,int m,largeInt &v){
+void div_by_exp(LargeInteger u,int m,LargeInteger &v){
     if(u.size()==0) v.resize(0);
     else{
         v.resize(u.size()-m);
@@ -46,11 +46,11 @@ void div(largeInt u,int m,largeInt &v){
         copy(u.begin()+m,u.end(),v.begin());
     }
 }
-void remove_leading_zeros(largeInt& v) {
+void remove_leading_zeros(LargeInteger& v) {
     while (v.size() != 0 && v.back()==0)
         v.pop_back();
 }
-void rem(largeInt u,int m,largeInt &v){
+void rem_by_exp(LargeInteger u,int m,LargeInteger &v){
     if(u.size()==0) v.resize(0);
     else{
         int k=m<u.size()?m:u.size();
@@ -59,21 +59,21 @@ void rem(largeInt u,int m,largeInt &v){
         remove_leading_zeros(v);
     }
 }
-void prod(largeInt u,largeInt v,largeInt &r){
+void prod(LargeInteger u,LargeInteger v,LargeInteger &r){
     cnt++;
-    largeInt x,y,w,z;
-    largeInt t1,t2,t3,t4,t5,t6,t7,t8;
+    LargeInteger x,y,w,z;
+    LargeInteger t1,t2,t3,t4,t5,t6,t7,t8;
     int n,m;
 
     n=max(u.size(),v.size());
     if(u.size()==0 || v.size()==0)
         r.resize(0);
     else if(n<=threshold)
-        mult(u,v,r);
+        lmult(u,v,r);
     else{
         m=n/2;
-        div(u,m,x); rem(u,m,y);
-        div(v,m,w); rem(v,m,z);
+        div_by_exp(u,m,x); rem_by_exp(u,m,y);
+        div_by_exp(v,m,w); rem_by_exp(v,m,z);
         prod(x,w,t1); pow(t1,2*m,t2);
         prod(x,z,t3); prod(w,y,t4); add(t3,t4,t5); pow(t5,m,t6);
         prod(y,z,t7); add(t2,t6,t8); add(t8,t7,r);

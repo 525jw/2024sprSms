@@ -5,7 +5,7 @@
     Floyd's Algorithm for Shortest Paths
 # Description 
     플로이드 알고리즘을 사용해 최단경로 구하기
-    거리만 구할 수 있음, 즉 최적해만 구할 수 있음
+    거리만 구할 수 있음, 즉 최적값만 구할 수 있음
 # Input
 
 # Output

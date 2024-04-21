@@ -3,7 +3,8 @@
     93p / Chapter 3.(Part1) 10p
 # Name 
     Binomial Coefficient Using Dvide-and-Conquer
-# Description 
+# Description
+    그냥 재귀호출로 이항계수 구하기
     Tree의 노드 개수 만큼 시간복잡도가 나온다. 높이는 worst case에서 n
 # Input
 

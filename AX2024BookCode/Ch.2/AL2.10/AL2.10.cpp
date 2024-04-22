@@ -49,7 +49,8 @@ int digits(largeint n) {
 /*- uv= xw*10^2m + ((x+y)(w+z)-(xw+yz))*10^m + yz 
 - uv= p*10^2m + (r-p-q)*10^m + q*/
 largeint karatsuba(largeint u,largeint v){
-    cout<<u<<' '<<v<<endl;
+    cnt++;
+    //cout<<u<<' '<<v<<endl;
     largeint x,y,w,z,p,q,r;
     //- 자릿수
     int n=max(digits(u),digits(v));
@@ -58,8 +59,6 @@ largeint karatsuba(largeint u,largeint v){
     else if(n<=threshold)
         return u*v;
     else{
-        //n^lg3을 계산한 값이 맞으려면 cnt가 여기있어야 값이 비슷하게 나옴 threshold보다 작으면 재귀호출이 아니니
-        cnt++;
         //karatsuba를 3번 호출 즉 재귀호출이 3번
         int m=n/2;
         x=div_by_exp(u,m); y=rem_by_exp(u,m);

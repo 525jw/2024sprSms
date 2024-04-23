@@ -64,7 +64,7 @@ void prim(int n,matrix_t& W,set_of_edges& F){
                 vnear=i;
             }
         }
-
+        cout<<'#'<<vnear<<endl;
         // v_nearest[vnear]와 v_vnear 연결 간선을 집합 F에 추가;
         F.push_back(make_pair(vnear,nearest[vnear]));
 
@@ -102,6 +102,8 @@ int main(){
     }
 
     prim(n,W,F);
+    
+
     
     for(int i=0;i<F.size();i++){ // edge_t e : F
         edge_t e=F[i];

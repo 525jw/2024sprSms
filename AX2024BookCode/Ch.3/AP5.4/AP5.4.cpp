@@ -13,12 +13,14 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#define INF 0xffff
 using namespace std;
 typedef struct vector<vector<int>> matrix;
 int main(){
     int n;
     cin>>n;
     matrix tgl(n+5,vector<int>(n+5,-1));
+    matrix solution(n+5,vector<int>(n+5,0));
     
     //입력
     for(int i=1;i<=n;i++)
@@ -31,15 +33,15 @@ int main(){
         for(int j=1;j<=i;j++){
             if(i==j) tgl[i][j]+=tgl[i-1][j-1];
             else if(j==1) tgl[i][j]+=tgl[i-1][j];
-            else tgl[i][j]+=max(tgl[i-1][j-1],tgl[i-1][j]);
+            else tgl[i][j]+=min(tgl[i-1][j-1],tgl[i-1][j]);
             }
 
     //optimal value 찾기
     int idx=1;
-    int maxval=-1;
+    int minval=INF;
     for(int i=1;i<=n;i++){
-        if(maxval<=tgl[n][i]){
-            maxval=tgl[n][i];
+        if(minval>=tgl[n][i]){
+            minval=tgl[n][i];
             idx=i;
         }
     }
@@ -53,8 +55,27 @@ int main(){
         }
     reverse(res.begin(),res.end());
 
+    int start=16;
+    solution[20][16]=1;
+    int i,j;
+    for(i=20;i>=1;i--){
+        for(j=20;j>=1;j--){
+            if(solution[i][j]){
+                if(tgl[i-1][j]!=-1) solution[i-1][j]=solution[i][j]+1;
+                if(tgl[i-1][j-1]!=-1) solution[i-1][j-1]=solution[i][j]+1;
+            }
+        }
+    }
+
+    for(i=1;i<=20;i++){
+        for(j=1;j<=20;j++){
+            cout<<solution[i][j]<<' ';
+        }
+        cout<<endl;
+    }
+    
     //출력
-    cout<<maxval<<endl;
+    cout<<minval<<endl;
     for(int i=1;i<res.size()-1;i++)
         cout<<res[i]<<' ';
     cout<<res.back();

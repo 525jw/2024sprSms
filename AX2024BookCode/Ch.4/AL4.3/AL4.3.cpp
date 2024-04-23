@@ -131,7 +131,6 @@ int main(){
     vector<int> touch=dijkstra(n,W,F);
     
 
-
     for(int i=0;i<F.size();i++)
         cout<<F[i].first<<' '<<F[i].second<<' '<<W[F[i].first][F[i].second]<<endl;
     

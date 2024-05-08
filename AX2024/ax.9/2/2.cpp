@@ -36,7 +36,7 @@ void huffman(int n,PriorityQueue& PQ){
         PQ.push(r);
     }
 }
-//- make an encoder for each char using the root node of the Huffmantree
+//- make an encoder for each char using the root node of the HuffmanTree
 void make_encoder(node_ptr node, string code, map<char,string> &encoder){
     if(node->symbol !='+'){
         encoder[node->symbol]=code;
@@ -45,18 +45,32 @@ void make_encoder(node_ptr node, string code, map<char,string> &encoder){
         make_encoder(node->right,code+"1",encoder);
     }
 }
-//- 
+
 void decode(node_ptr root, node_ptr node, string s,int i){
     if(i<=s.length()){
         if(node->symbol!='+'){
             cout<<node->symbol;
             decode(root,root,s,i);
-        }else{
+        }else{ //if(node->symbol=='+')
             if(s[i]=='0')
                 decode(root,node->left,s,i+1);
-            else
+            else // if(s[i]=='1')
                 decode(root,node->right,s,i+1);
         }
+    }
+}
+void preorder_traversal(node_ptr root){
+    if(root){
+        cout<<root->symbol<<':'<<root->frequency<<' ';
+        preorder_traversal(root->left);
+        preorder_traversal(root->right);
+    }
+}
+void inorder_traversal(node_ptr root){
+    if(root){
+        inorder_traversal(root->left);
+        cout<<root->symbol<<':'<<root->frequency<<' ';
+        inorder_traversal(root->right);
     }
 }
 int main(){
@@ -75,7 +89,12 @@ int main(){
 
     map<char,string> encoder;
     make_encoder(PQ.top(),"",encoder);
-    
+
+    preorder_traversal(PQ.top());
+    cout<<endl;
+    inorder_traversal(PQ.top());
+    cout<<endl;
+
     //encode the given text for t1 times using the map 'encoder'
     int t1; cin>>t1;
     string inp,encoded;
@@ -87,11 +106,16 @@ int main(){
         cout<<encoded<<endl;
     }
 
+    //decode the given text for t2 times using the HuffmanTree
     int t2; cin>>t2;
-
-
-
-
+    string decoded;
+    for(int i=0;i<t2;i++){
+        inp.clear(); decoded.clear();
+        cin>>inp;
+        decode(PQ.top(),PQ.top(),inp,0);
+        cout<<decoded;
+        if(i<t2-1) cout<<endl;
+    }
 
     return 0;
 }

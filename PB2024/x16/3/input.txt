@@ -1,0 +1,11 @@
+10
+banana 1000
+kiwi 1250
+apple 580
+tomato 640
+lemon 220
+melon 1780
+pear 760
+blueberry 990
+strawberry 350
+orange 690

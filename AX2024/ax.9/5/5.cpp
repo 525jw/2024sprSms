@@ -2,19 +2,20 @@
 #include <vector>
 using namespace std;
 int main(){
-    int N;
+    long long N;
     cin>>N;
-    int t=1;
-    vector<int> student;
-    for(int i=0;i<N;i++)
+    long long t=1,cur=0;
+    vector<long long> student;
+    for(long long i=0;i<N;i++)
         student.push_back(i+1);
-    /*- N=4
-    index  0 1 2 3
-    NUM    1 2 3 4
-    */
     while(student.size()>1){
-
+        long long step=t*t*t;
+        cur=(cur+(step-1))%student.size();
+        student.erase(student.begin()+cur);
+        if(cur==student.size())
+            cur=0;
         t++;
     }
+    cout<<student[cur];
     return 0;
 }

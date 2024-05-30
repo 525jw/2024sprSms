@@ -1,9 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <queue>
 #include <map>
 using namespace std;
-
+typedef struct _sorting{
+    int w;
+    int p;
+    double e;
+}sorting;
 int knapsack3(int n,int W,vector<int> w,vector<int> p,map<pair<int,int>,int> &P){
     if(n==0 || W<=0)
         return 0;
@@ -15,7 +20,9 @@ int knapsack3(int n,int W,vector<int> w,vector<int> p,map<pair<int,int>,int> &P)
     P[make_pair(n,W)]=(w[n]>W)?lvalue:max(lvalue,p[n]+rvalue);
     return P[make_pair(n,W)];
 }
-
+bool compare(const sorting a,const sorting b){
+    return a.e>b.e;
+}
 
 int main(){
     vector<int> w,p;
@@ -27,6 +34,16 @@ int main(){
     p.resize(n+1);
     for(int i=1;i<=n;i++)   
         cin>>p[i];
+
+    vector<sorting> sortinging(n+1);
+    for(int i=1;i<=n;i++)   
+        sortinging[i]={w[i],p[i],(double)p[i]/(double)w[i]};
+    sort(sortinging.begin()+1,sortinging.end(),compare);
+    for(int i=1;i<=n;i++){
+        w[i]=sortinging[i].w;
+        p[i]=sortinging[i].p;
+    }
+
     int T;
     cin>>T;
     map<pair<int,int>,int> P;

@@ -9,6 +9,8 @@ int n,m;
 int T;
 int s;
 int cnt;
+vector<int> start_points;
+
 void make_graph(int n,int m){
     int imove[]={-2,-1,1,2, 2, 1,-1,-2};
     int jmove[]={ 1, 2,2,1,-1,-2,-2,-1};
@@ -24,47 +26,53 @@ void make_graph(int n,int m){
         }
     }
 }
+
 bool finds(int s,vector<int> v){
     for(int i=0;i<v.size();i++){
         if(v[i]==s) return true;
     }
     return false;
 }
-void tour(int k,int v){
-    if(k==n*m && finds(s,graph[v]) ){
-        mark[v]=k;
-        cnt++;
+
+void tour(int k, int v, bool isStartingPoint) {
+    if(k==n*m){
+        // 모든 정점을 방문한 후, 시작 정점으로 돌아갈 수 있는지 확인
+        if (finds(s, graph[v])) {
+            cnt++;
+        }
+        return;
     }
     else{
         for(int i=0;i<graph[v].size();i++){
             if(mark[graph[v][i]]==0){
                 mark[graph[v][i]]=k+1;
-                tour(k+1,graph[v][i]);
+                tour(k+1,graph[v][i],false);
                 mark[graph[v][i]]=0;
             }
         }
     }
 }
-int main(){
+
+int main() {
     cin>>n>>m>>T;
     make_graph(n,m);
     mark.resize(n*m,0);
     s=0;
     cnt=0;
-    tour(1,s);
-    cout<<cnt<<endl;
+
     while(T--){
         int y,x;
         cin>>y>>x;
-        
-        s=y*m+x;
+        start_points.push_back(y*m+x);
+    }
+
+    for (int i=0;i<start_points.size();i++) {
+        s=start_points[i];
         cnt=0;
-        mark.clear();
+        fill(mark.begin(),mark.end(),0);
         mark[s]=1;
-        tour(1,s);
-
-
+        tour(1,s,true);
         cout<<cnt;
-        if(T>0) cout<<endl;
+        if(i<start_points.size()-1) cout<<endl;
     }
 }

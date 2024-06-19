@@ -1,0 +1,11 @@
+we learned about how the shell program works with psh2.c 
+But psh2.c is designed to accept arguments one by one in multiple lines.
+Modify the psh2.c that we learned in the class to support the following features.
+
+- The program name is psh3 The c code file name is psh3.c
+- When we start psh3 shell, it should show a command prompt like regular shell. The command prompt should be '$'
+ex) jw@local $./psh3
+    $ <-psh3 is running here
+- In the command prompt whe should be able to enter a command in a single line
+- When "exit" is entere, it should quit and return to the original shell prompt.
+- It should not print unecessary message on the sceen
